@@ -1,0 +1,17 @@
+brand,model,price,mileage,fuel_type
+Volkswagen,ID.5,"€ 61,055.-",20 km,Electric
+Audi,Q2,"€ 30,470.-","1,050 km",Gasoline
+Volkswagen,ID.7,"€ 65,575.-",10 km,Electric
+Audi,A6,"€ 42,243.-","1,050 km",Gasoline
+Audi,Q2,"€ 30,470.-","1,050 km",Gasoline
+Mercedes-Benz,GLC 200,"€ 50,775.-","16,221 km",Gasoline
+DS Automobiles,DS 4,"€ 31,490.-","5,890 km",Gasoline
+Volkswagen,Tiguan,"€ 6,800.-","209,981 km",Diesel
+Skoda,Superb,"€ 38,990.-","41,510 km",Diesel
+Audi,A1,"€ 29,310.-","2,311 km",Gasoline
+Volkswagen,Golf,"€ 27,400.-","26,994 km",Diesel
+Audi,A3,"€ 39,330.-",10 km,Gasoline
+Audi,A6,"€ 48,163.-","7,741 km",Diesel
+Hyundai,KONA,"€ 26,995.-","33,636 km",Electric
+Mitsubishi,Space Star,"€ 16,945.-","9,976 km",Gasoline
+Audi,A1,"€ 27,370.-","1,050 km",Gasoline
