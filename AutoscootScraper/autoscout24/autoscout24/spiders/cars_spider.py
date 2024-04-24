@@ -5,10 +5,51 @@ import re
 class AutoScootSpider(scrapy.Spider):
     name = "autoscoot"
     start_urls = [
-        'https://www.autoscout24.com/lst?atype=C&cy=D%2CA%2CB%2CE%2CF%2CI%2CL%2CNL&damaged_listing=exclude&desc=1&ocs_listing=include&powertype=kw&search_id=2d5dtu2rrk3&size=20&sort=age&source=listpage_pagination&ustate=N%2CU',
+        'https://www.autoscout24.com/lst/audi?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/bmw?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/ford?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/opel?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/volkswagen?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/renault?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/alfa-romeo?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/aston-martin?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/bentley?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/bugatti?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/cadillac?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/chevrolet?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/citroen?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/corvette?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/cupra?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/dacia?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/ferrari?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/honda?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/hyundai?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/jaguar?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/jeep?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/kia?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/land-rover?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/lamborghini?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/lexus?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/maserati?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/mazda?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/mclaren?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/mini?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/mitsubishi?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/nissan?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/peugeot?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/porsche?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/rolls-royce?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/skoda?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/seat?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/smart?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/subaru?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/suzuki?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/tesla?atype=C&desc=1&page=1',
+        'https://www.autoscout24.com/lst/toyota?atype=C&desc=1&page=1',
+
     ]
 
-    n_pages_to_scrape = 2
+    n_pages_to_scrape = 20
 
     def parse(self, response):
         # Process each car on the current page
@@ -26,19 +67,32 @@ class AutoScootSpider(scrapy.Spider):
             yield response.follow(next_page_url, callback=self.parse)
 
     def parse_car(self, response):
-        brand = response.xpath('//*/h1/div[1]/span[1]/text()').get().strip()
-        model = response.xpath('//*/h1/div[1]/span[2]/text()').get().strip()
-        price = response.xpath('//*/div[3]/div[1]/div/span/text()').get().strip()
-        mileage = response.xpath('//*/div[1]/div[4]/text()').get().strip()
-        fuel_type = response.xpath('//*/div[4]/div[4]/text()').get().strip()
+        def extract_with_default(xpath, default="unknown"):
+            return response.xpath(xpath).get().strip() if response.xpath(xpath).get() else default
 
-        
         car_info = {
-            'brand': brand,
-            'model': model,
-            'price': price,
-            'mileage': mileage,
-            'fuel_type': fuel_type
+            'url': response.url,
+            'brand': extract_with_default('//*/h1/div[1]/span[1]/text()'),
+            'model': extract_with_default('//*/h1/div[1]/span[2]/text()'),
+            'price': extract_with_default('//*/div[3]/div[1]/div/span/text()'),
+            'first_registration': extract_with_default('//*/div[3]/div[2]/div[3]/div[4]/text()'),
+            'mileage': extract_with_default('//*/div[1]/div[4]/text()'),
+            'fuel_type': extract_with_default('//*/div[4]/div[4]/text()'),
+            'color': extract_with_default('//*[@id="color-section"]/div/div[2]/dl/dd[1]/text()'),
+            'gearbox': extract_with_default('//*[@id="technical-details-section"]/div/div[2]/dl/dd[2]/text()'),
+            'power': extract_with_default('//*[@id="technical-details-section"]/div/div[2]/dl/dd[1]/text()'),
+            'engine_size': extract_with_default('//*[@id="technical-details-section"]/div/div[2]/dl/dd[3]/text()'),
+            'seller': extract_with_default('//*[@id="__next"]/div/div/main/div[3]/div[3]/div[2]/div[6]/div[4]/text()'),
+            'location': extract_with_default('//*[@id="__next"]/div/div/main/div[3]/div[2]/a/text()'),
+            'body_type': extract_with_default('//*[@id="basic-details-section"]/div/div[2]/dl/dd[1]/text()'),
+            'doors': extract_with_default('//*[@id="basic-details-section"]/div/div[2]/dl/dd[5]/text()'),
+            'seats': extract_with_default('//*[@id="basic-details-section"]/div/div[2]/dl/dd[4]/text()'),
+            'drivetrain': extract_with_default('//*[@id="basic-details-section"]/div/div[2]/dl/dd[3]/text()'),
+            'co2_emission': extract_with_default('//*[@id="environment-details-section"]/div/div[2]/dl/dd[2]/text()'),
+            'emission_class': extract_with_default('//*[@id="environment-details-section"]/div/div[2]/dl/dd[3]/text()'),
+            'condition': extract_with_default('//*[@id="basic-details-section"]/div/div[2]/dl/dd[2]/text()'),
+            'upholstery': extract_with_default('//*[@id="color-section"]/div/div[2]/dl/dd[4]/text()'),
+            'upholstery_color': extract_with_default('//*[@id="color-section"]/div/div[2]/dl/dd[3]/text()'),
         }
 
         yield car_info
