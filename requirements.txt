@@ -1,1 +1,11 @@
 scrapy
+dash
+pandas
+dash-bootstrap-components
+matplotlib
+seaborn
+scikit-learn
+xgboost
+joblib
+networkx
+ipywidgets
