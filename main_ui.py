@@ -219,7 +219,7 @@ app.layout = dbc.Container([
     dbc.Row([dbc.Col(html.H2('Specifications : ', className='text-left mb-4'), width=12)]),
     dbc.Row([
         create_dropdown('Brand', 'make-dropdown', create_brand_options(dropdown_options['brand']), "Select a brand"),
-        create_dropdown('Model', 'model-dropdown', [{'label': option, 'value': option} for option in dropdown_options['model']], "Select a model"),
+        create_dropdown('Model', 'model-dropdown', [], "Select a model"),
         create_dropdown('Fuel Type', 'fuel-type-dropdown', [{'label': option, 'value': option} for option in dropdown_options['fuel_type']], "Select a fuel type"),
         create_dropdown('Gearbox', 'gearbox-dropdown', [{'label': option, 'value': option} for option in dropdown_options['gearbox']], "Select a gearbox type"),
     ], className='mb-1'),
@@ -354,6 +354,17 @@ app.layout = dbc.Container([
     dbc.Row([dbc.Col(html.Button('Predict Price', id='predict-button', n_clicks=0, className='btn btn-primary mt-3 predict-btn'), className='d-grid gap-2 d-md-flex justify-content-md-center')]),
     dbc.Row([dbc.Col(html.Div(id='output-container', className='mt-4 p-4 border rounded bg-light'), width=12)])
 ], fluid=True)
+
+# Callback to update model dropdown based on selected brand
+@app.callback(
+    Output('model-dropdown', 'options'),
+    [Input('make-dropdown', 'value')]
+)
+def set_model_options(selected_brand):
+    if selected_brand is None:
+        return []
+    filtered_models = df[df['brand'] == selected_brand]['model'].unique()
+    return [{'label': model, 'value': model} for model in filtered_models]
 
 # Callback to synchronize input and slider for mileage
 @app.callback(
