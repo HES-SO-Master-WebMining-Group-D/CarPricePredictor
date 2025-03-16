@@ -1,52 +1,15 @@
 import scrapy
 from urllib.parse import urljoin
-import re
 
 class AutoScootSpider(scrapy.Spider):
     name = "autoscoot"
     start_urls = [
-        'https://www.autoscout24.com/lst/audi?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/bmw?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/ford?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/opel?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/volkswagen?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/renault?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/alfa-romeo?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/aston-martin?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/bentley?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/bugatti?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/cadillac?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/chevrolet?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/citroen?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/corvette?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/cupra?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/dacia?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/ferrari?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/honda?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/hyundai?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/jaguar?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/jeep?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/kia?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/land-rover?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/lamborghini?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/lexus?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/maserati?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/mazda?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/mclaren?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/mini?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/mitsubishi?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/nissan?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/peugeot?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/porsche?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/rolls-royce?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/skoda?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/seat?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/smart?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/subaru?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/suzuki?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/tesla?atype=C&desc=1&page=1',
-        'https://www.autoscout24.com/lst/toyota?atype=C&desc=1&page=1',
-
+        f'https://www.autoscout24.com/lst/{brand}?atype=C&desc=1&page=1' for brand in [
+            'audi', 'bmw', 'ford', 'opel', 'volkswagen', 'renault', 'alfa-romeo', 'aston-martin', 'bentley', 'bugatti',
+            'cadillac', 'chevrolet', 'citroen', 'corvette', 'cupra', 'dacia', 'ferrari', 'honda', 'hyundai', 'jaguar',
+            'jeep', 'kia', 'land-rover', 'lamborghini', 'lexus', 'maserati', 'mazda', 'mclaren', 'mini', 'mitsubishi',
+            'nissan', 'peugeot', 'porsche', 'rolls-royce', 'skoda', 'seat', 'smart', 'subaru', 'suzuki', 'tesla', 'toyota'
+        ]
     ]
 
     n_pages_to_scrape = 20
