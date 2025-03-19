@@ -5,9 +5,9 @@ import pandas as pd
 
 app = FastAPI()
 
-with open('models/xgbr_price_predictor.pkl', 'rb') as f:
+with open('app/xgbr_price_predictor.pkl', 'rb') as f:
     model = pickle.load(f)
-with open('src/assets/feature_names.pkl', 'rb') as f:
+with open('app/feature_names.pkl', 'rb') as f:
     feature_names = pickle.load(f)
 
 

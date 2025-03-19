@@ -2,15 +2,9 @@ import dash
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
 import pandas as pd
-import pickle
 import dash_bootstrap_components as dbc
 from datetime import datetime
 import requests
-
-
-def load_pickle_file(filename):
-    with open(filename, 'rb') as file:
-        return pickle.load(file)
 
 
 def classify_emission(value):
@@ -96,9 +90,7 @@ emission_class_map = {
     'Euro 6e': '10'
 }
 
-df = pd.read_csv('data/cleaned_cars.csv')
-xgb_model = load_pickle_file('models/xgbr_price_predictor.pkl')
-feature_names = load_pickle_file('src/assets/feature_names.pkl')
+df = pd.read_csv('/src/data/cleaned_cars.csv')
 
 
 def get_unique_values(df, column):
@@ -556,7 +548,7 @@ def update_output(n_clicks, stored_values, mileage, power, engine_size, doors, s
         ]), ''
 
     try:
-        response = requests.post("http://localhost:8000/predict", json={"input_data": input_data})
+        response = requests.post("http://backend:8000/predict", json={"input_data": input_data})
         response.raise_for_status()
         prediction_result = response.json()
         prediction = prediction_result.get("prediction", "No prediction")
@@ -577,4 +569,4 @@ def update_output(n_clicks, stored_values, mileage, power, engine_size, doors, s
 
 
 if __name__ == '__main__':
-    app.run_server(debug=False)
+    app.run(host="0.0.0.0", port=8050, debug=False)

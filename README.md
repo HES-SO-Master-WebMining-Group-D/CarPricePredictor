@@ -12,27 +12,14 @@ It is a simple end-to-end data science project consisting of:
 - **User Interface**: Creating a simple user interface using Dash to interact with the deployed model and access autoscoot24.com without having to re-enter the car details
 
 ## Installation and Usage
-1. Install the required packages using the following command:
+1. Make sure you have Docker installed on your machine
+2. Clone the repository
+3. Run the following command to build the Docker image:
 ```bash
-pip install -r requirements.txt
+docker-compose up --build
 ```
-2. Run the following command to start the FastAPI server:
+4. Open your browser and go to `http://0.0.0.0:8050/` to access the user interface
+5. To stop all running containers, press CTRL + C or run:
 ```bash
-python -m uvicorn src.app:app --host 0.0.0.0 --port 8000
+docker-compose down
 ```
-3. Launch the Dash app by running the following command:
-```bash
-python src/main_ui.py
-```
-4. Open the following URL in your browser to access the user interface: [//http://127.0.0.1:8050]
-
-## Collect new data
-1. Run the following command to scrape new data from autoscout24.com:
-```bash
-cd AutoscootScraper/autoscout24
-````
-
-```bash
-scrapy crawl autoscout
-```
-2. Experiment with the notebooks to clean and explore the new data, then retrain the model using the updated data.
